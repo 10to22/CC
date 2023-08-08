@@ -15,8 +15,8 @@
     const chatOutput = document.getElementById("chatOutput");
     const messageInput = document.getElementById("messageInput");
     
-    // Replace 'your-websocket-server-url' with your actual WebSocket server URL
-    const socket = new WebSocket('wss://192.168.4.1:8080');
+    // Replace 'wss://your-server-domain.com' with your actual WebSocket server URL
+    const socket = new WebSocket('wss://cellophanecarpet.xyz/');
     
     socket.addEventListener('open', event => {
       console.log('Connected to the chatroom.');
