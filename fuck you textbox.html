@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="css.css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+  <body>
+    <button onclick="Text()">Send</button>
+    <textarea id="fast"></textarea>
+    <p id="consoleOutput"></p>
+    <script>
+    const consoleOutput = document.getElementById("consoleOutput");
+    const textarea = document.getElementById("fast");
+    const inputElement = document.getElementById("fast");
+    
+    function Text(){
+      const TextContent = inputElement.value;
+    console.log (TextContent)
+  }
+  window.onload=function(){
+  
+  textarea.addEventListener("keydown", function(event){
+  if (event.keyCode === 13) {
+  event.preventDefault();
+  const TextContent = textarea.value;
+  console.log (TextContent)
+  }
+  })};
+
+  const originalConsoleLog = console.log;
+    console.log = function(message) {
+      originalConsoleLog.apply(console, arguments);
+
+    const lines = message.split("\n");
+    const lineElements = lines.map(line =>{
+    const span = document.createElement("span")
+    span.textContent = line;
+    return span;
+    });
+
+    lineElements.forEach(span => {
+        consoleOutput.appendChild(span);
+        consoleOutput.appendChild(document.createElement("br"));
+    }); 
+}     
+  </script>
+  </body>
+</html>
