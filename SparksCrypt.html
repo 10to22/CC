@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Spark Cipher Encryption</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <container>
+    <div class="nav">
+      <button onclick="encryptMessage()">Encrypt</button>
+      <button onclick="decryptMessage()">Decrypt</button>
+      <button onclick="copyOutput()">Copy</button>
+      <button onclick="pasteInput()">Paste</button>
+      <button onclick="exportMessage()">Export</button>
+      <button onclick="clearText()">Clear</button>
+      <a id="back" href="index.html">back</a>
+    </div>
+    
+    <div class="textareas-container">
+        <textarea id="inputText" rows="5" class="locked-textarea"></textarea>
+        <textarea id="outputText" rows="5" class="locked-textarea" disabled></textarea>
+      </div>
+      
+      </container>
+    <script>
+      function pigpenCipher(text) {
+        // Define the Pigpen cipher key with custom symbols
+        const pigpenKey = {
+          A: "🔵🔘🔵 ",
+          B: "🔵🔘🔘 ",
+          C: "🔘🔘🔵 ",
+          D: "🔘🔘🔘 ",
+          E: "🔵🔵🔘 ",
+          F: "🔵🔵🔵 ",
+          G: "🔵🔴🔘 ",
+          H: "🔵🔴🔵 ",
+          I: "🔴🔘🔘 ",
+          J: "🔴🔘🔵 ",
+          K: "🔴🟣🔘 ",
+          L: "🔴🔴🔵 ",
+          M: "🔴🔵🔘 ",
+          N: "🔴🔵🔵 ",
+          O: "🔘🔴🔘 ",
+          P: "🔘🔴🔵 ",
+          Q: "🔴🔵🔴 ",
+          R: "🔴🔴🔴 ",
+          S: "🔵🔴🟣 ",
+          T: "🔵🔵🔴 ",
+          U: "🔘🔴🔴 ",
+          V: "🔘🔵🔴 ",
+          W: "🔵🔴🔴 ",
+          X: "🔴🔘🔴 ",
+          Y: "🔴🔴🔘 ",
+          Z: "🔵🔘🔴 ",
+          " ": "🟡🟠🟡 ",
+          "!": "🟡🟠🔴 ",
+          ".": "🟡🟠🔘 ",
+          "?": "🟡🟠🔵 ",
+          ",": "🟡🟠🟠 ",
+        };
+
+        // Convert the input text to uppercase
+        text = text.toUpperCase();
+
+        // Encrypt the text using Pigpen cipher
+        let encryptedText = "";
+        for (let char of text) {
+          if (char in pigpenKey) {
+            encryptedText += pigpenKey[char];
+          }
+        }
+
+        return encryptedText;
+      }
+
+      function pigpenDecipher(encryptedText) {
+        // Define the Pigpen cipher key for decryption
+        const pigpenKey = {
+          "🔵🔘🔵": "A",
+          "🔵🔘🔘": "B",
+          "🔘🔘🔵": "C",
+          "🔘🔘🔘": "D",
+          "🔵🔵🔘": "E",
+          "🔵🔵🔵": "F",
+          "🔵🔴🔘": "G",
+          "🔵🔴🔵": "H",
+          "🔴🔘🔘": "I",
+          "🔴🔘🔵": "J",
+          "🔴🟣🔘": "K",
+          "🔴🔴🔵": "L",
+          "🔴🔵🔘": "M",
+          "🔴🔵🔵": "N",
+          "🔘🔴🔘": "O",
+          "🔘🔴🔵": "P",
+          "🔴🔵🔴": "Q",
+          "🔴🔴🔴": "R",
+          "🔵🔴🟣": "S",
+          "🔵🔵🔴": "T",
+          "🔘🔴🔴": "U",
+          "🔘🔵🔴": "V",
+          "🔵🔴🔴": "W",
+          "🔴🔘🔴": "X",
+          "🔴🔴🔘": "Y",
+          "🔵🔘🔴": "Z",
+          "🟡🟠🟡": " ",
+          "🟡🟠🔴": "!",
+          "🟡🟠🔘": ".",
+          "🟡🟠🔵": "?",
+          "🟡🟠🟠": ",",
+        };
+
+        // Decrypt the encrypted text using Pigpen cipher
+        let decryptedText = "";
+        const encryptedSymbols = encryptedText.split(" ");
+        for (let symbol of encryptedSymbols) {
+          if (symbol in pigpenKey) {
+            decryptedText += pigpenKey[symbol];
+          }
+        }
+
+        return decryptedText;
+      }
+
+      function encryptMessage() {
+        const inputElement = document.getElementById("inputText");
+        const outputElement = document.getElementById("outputText");
+        const message = inputElement.value.trim();
+        const encryptedMessage = pigpenCipher(message);
+        outputElement.value = encryptedMessage;
+      }
+
+      function decryptMessage() {
+        const inputElement = document.getElementById("inputText");
+        const outputElement = document.getElementById("outputText");
+        const encryptedMessage = inputElement.value.trim();
+        const decryptedMessage = pigpenDecipher(encryptedMessage);
+        outputElement.value = decryptedMessage;
+      }
+
+      function copyOutput() {
+        const outputElement = document.getElementById("outputText");
+        outputElement.select();
+        document.execCommand("copy");
+      }
+
+      function pasteInput() {
+        const inputElement = document.getElementById("inputText");
+        inputElement.value = "";
+        inputElement.focus();
+        document.execCommand("paste");
+      }
+
+      function exportMessage() {
+        const outputElement = document.getElementById("outputText");
+        const message = outputElement.value;
+        const blob = new Blob([message], { type: "text/plain" });
+        const anchor = document.createElement("a");
+        anchor.href = URL.createObjectURL(blob);
+        anchor.download = "output.txt";
+        anchor.click();
+      }
+
+      function clearText() {
+        const inputElement = document.getElementById("inputText");
+        const outputElement = document.getElementById("outputText");
+        inputElement.value = "";
+        outputElement.value = "";
+      }
+    </script>
+  </body>
+</html>
