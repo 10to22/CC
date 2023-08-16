@@ -137,18 +137,37 @@
         outputElement.value = decryptedMessage;
       }
 
-      function copyOutput() {
-        const outputElement = document.getElementById("outputText");
-        outputElement.select();
-        document.execCommand("copy");
-      }
+function copyOutput() {
+  const outputElement = document.getElementById("outputText");
+  outputElement.select();
 
-      function pasteInput() {
-        const inputElement = document.getElementById("inputText");
-        inputElement.value = "";
-        inputElement.focus();
-        document.execCommand("paste");
-      }
+  try {
+    const successful = document.execCommand("copy");
+    const message = successful ? "Text copied!" : "Copy failed.";
+    console.log(message);
+  } catch (err) {
+    console.error("Copy failed:", err);
+  }
+
+  // Remove the selection from the output element
+  window.getSelection().removeAllRanges();
+}
+
+function pasteInput() {
+  const inputElement = document.getElementById("inputText");
+
+  inputElement.focus();
+  try {
+    if (document.execCommand("paste")) {
+      const pastedText = inputElement.value;
+      console.log("Pasted text:", pastedText);
+    } else {
+      console.log("Paste failed.");
+    }
+  } catch (err) {
+    console.error("Paste failed:", err);
+  }
+}
 
       function exportMessage() {
         const outputElement = document.getElementById("outputText");
