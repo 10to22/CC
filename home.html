@@ -1,18 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sparks Hub</title>
     <style>
-        a{
-            font-size: 24px;
+      a {
+        overflow: hidden;
+        white-space: nowrap;
+        font-size: 16px;
+        color: rgb(255, 0, 0);
+        margin: 20px;
+        background-color: black;
+        padding: 10px;
+        
+        animation: typing 2s steps(40, end) forwards, blinking 0.75s infinite;
+        width: auto;
+        line-height: 1.4;
+        font-family: "Courier New", Courier, monospace;
+        animation: typing 2s steps(20, end) forwards, blinking 0.75s infinite;
+      }
+      .c2 {
+        white-space: nowrap;
+        font-size: 16px;
+        color: #0f0;
+        background-color: black;
+        padding: 20px;
+        width: auto;
+        line-height: 1.4;
+        font-family: "Courier New", Courier, monospace;
+      }
+      body {
+        overflow: hidden;
+        background-color: black;
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        align-items: center;
+        height: 100vh;
+        margin: 50px;
+        font-family: "Courier New", Courier, monospace;
+      }
+
+      .typed-out {
+        overflow: hidden;
+        white-space: nowrap;
+        font-size: 16px;
+        color: #0f0;
+        margin: 20px;
+        background-color: black;
+        padding: 10px;
+        border-right: 2px solid transparent; /* Start with transparent border */
+        animation: typing 2s steps(40, end) forwards, blinking 0.75s infinite;
+        width: auto;
+        line-height: 1.4;
+        font-family: "Courier New", Courier, monospace;
+        animation: typing 2s steps(20, end) forwards, blinking 0.75s infinite;
+      }
+      @keyframes typing {
+        from {
+          width: 0;
+          border-color: transparent;
         }
+        to {
+          width: 100%;
+          border-color: #0f0;
+        }
+      }
+
+      @keyframes blinking {
+        from {
+          border-color: transparent;
+        }
+        to {
+          border-color: #0f0;
+        }
+      }
+      .hidden {
+        display: none;
+      }
     </style>
-</head>
-<body>
-    <a href="SparksCrypt.html">Message Encryption Softwear</a>
-    <br>
-    <a href="https://crypts.rocket.chat/home">Messager</a>
-</body>
+    <script>
+      function replaceWithSecondMessage() {
+        var firstMessage = document.getElementById("first-message");
+        var secondMessage = document.getElementById("second-message");
+        var thirdMessage = document.getElementById("third-message");
+        var fourthMessage = document.getElementById("fourth-message");
+        var fithMessage = document.getElementById("fifth-message");
+
+        firstMessage.classList.remove("hidden"); // Show the first message
+        secondMessage.style.display = "none";
+        thirdMessage.style.display = "none";
+        fourthMessage.style.display = "none";
+        fithMessage.style.display = "none";
+      }
+      function showSecondMessage() {
+        var secondMessage = document.getElementById("second-message");
+        secondMessage.classList.remove("hidden");
+
+        // Retrieve the user's public IPv4 address
+        fetch("https://api64.ipify.org?format=json")
+          .then((response) => response.json())
+          .then((data) => {
+            var ipAddress = data.ip;
+            document.getElementById("ip-address").textContent = ipAddress;
+          })
+          .catch((error) => console.error("Error fetching IP address:", error));
+      }
+      function showThirdMessage() {
+        console.log("showThirdMessage() is being run!");
+        var thirdMessage = document.getElementById("third-message");
+        thirdMessage.classList.remove("hidden");
+      }
+      function showFourthMessage() {
+        console.log("showFourthMessage() is being run!");
+        var fourthMessage = document.getElementById("fourth-message");
+        fourthMessage.classList.remove("hidden");
+      }
+  
+      function showFifthMessage() {
+        console.log("showFifthMessage() is being run!");
+        var fifthMessage = document.getElementById("fifth-message");
+        fifthMessage.classList.remove("hidden");
+      }
+    </script>
+  </head>
+  <body>
+    <div class="c2">
+      <div
+        class="typed-out"
+        onanimationend="setTimeout(showSecondMessage, 1000)"
+      >
+        Sparks Hub
+      </div>
+      <div
+        id="second-message"
+        class="hidden typed-out"
+        onanimationend="setTimeout(showThirdMessage, 1000)"
+      >
+        Welcome User {<span id="ip-address"></span>}
+      </div>
+      <div
+        id="third-message"
+        class="hidden typed-out"
+        onanimationend="setTimeout(showFourthMessage, 1000)"
+      >
+        Be Carefull On What You share On The Enternet ;)
+      </div>
+      <br />
+      <br />
+      <br />
+      <br />
+      <div
+      id="fourth-message"
+      class="hidden typed-out"
+      onanimationend="setTimeout(showFifthMessage, 1000)"
+    >
+      <a href="SparksCrypt.html">Message Encryption Software</a>
+    </div>
+    <div
+      id="fifth-message"
+      class="hidden typed-out"
+      onanimationend="setTimeout(showFifthMessage, 1000)"
+    >
+      <a href="https://crypts.rocket.chat/home">Messenger</a>
+    </div>
+    </div>
+  </body>
 </html>
