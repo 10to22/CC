@@ -10,9 +10,7 @@
         white-space: nowrap;
         font-size: 16px;
         color: rgb(255, 0, 0);
-        margin: 20px;
         background-color: black;
-        padding: 10px;
         
         animation: typing 2s steps(40, end) forwards, blinking 0.75s infinite;
         width: auto;
@@ -81,6 +79,36 @@
       }
     </style>
     <script>
+// Get the element you want to make fullscreen
+function enterFullscreen() {
+    var element = document.documentElement;
+
+    if (element.requestFullscreen) {
+      element.requestFullscreen();
+    } else if (element.mozRequestFullScreen) {
+      element.mozRequestFullScreen();
+    } else if (element.webkitRequestFullscreen) {
+      element.webkitRequestFullscreen();
+    } else if (element.msRequestFullscreen) {
+      element.msRequestFullscreen();
+    }
+  }
+
+  window.onload = function() {
+    enterFullscreen();
+  };
+
+// Trigger fullscreen mode
+if (element.requestFullscreen) {
+  element.requestFullscreen();
+} else if (element.mozRequestFullScreen) { // Firefox
+  element.mozRequestFullScreen();
+} else if (element.webkitRequestFullscreen) { // Chrome, Safari and Opera
+  element.webkitRequestFullscreen();
+} else if (element.msRequestFullscreen) { // IE/Edge
+  element.msRequestFullscreen();
+}
+
       function replaceWithSecondMessage() {
         var firstMessage = document.getElementById("first-message");
         var secondMessage = document.getElementById("second-message");
