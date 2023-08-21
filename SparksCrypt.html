@@ -1,27 +1,90 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Spark Cipher Encryption</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>Sparks Cipher Encryption</title>
+    <style>
+        button {
+            font-size: 100%;
+            padding: 5px 10px;
+            width: 5%;
+            filter: saturate(0);
+            filter: invert(100%);
+          }
+        nav{
+            width: 100%;
+            align-items: center;
+            margin-top:10%;
+        }
+      body {
+        overflow: hidden;
+        background-color: black;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        height: 100vh;
+        margin: 10px;
+        font-family: "Courier New", Courier, monospace;
+      }
+
+    .typed-out{
+        overflow: hidden;
+        border-right: .15em solid green;
+        white-space: nowrap;
+        margin-top: 10%;
+        font-size: 300%;
+        color: green;
+        animation: 
+          typing 1.5s steps(20, end) forwards,
+          blinking .75s infinite;
+        width: 0;
+    }
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100%; }
+    }
+    @keyframes blinking {
+      from { border-color: transparent }
+      to { border-color: green; }
+    }
+      #inputText,
+      #outputText {
+        width: 40%;
+        height: 10%;
+        resize: none;
+        box-sizing: border-box;
+        filter: saturate(0%);
+        filter: invert();
+      }
+      textarea {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+    </style>
   </head>
   <body>
-    <container>
-    <div class="nav">
+        
+        <div class="c2">
+            <div class="typed-out">
+                Crypts Sypher Encryption
+            </div>
+        </div>
+      <nav>  
       <button onclick="encryptMessage()">Encrypt</button>
       <button onclick="decryptMessage()">Decrypt</button>
       <button onclick="copyOutput()">Copy</button>
       <button onclick="pasteInput()">Paste</button>
       <button onclick="exportMessage()">Export</button>
       <button onclick="clearText()">Clear</button>
-      <a id="back" href="index.html">back</a>
-    </div>
-    
-    <div class="textareas-container">
-        <textarea id="inputText" rows="5" class="locked-textarea"></textarea>
-        <textarea id="outputText" rows="5" class="locked-textarea" disabled></textarea>
-      </div>
-      
-      </container>
+    </nav>
+    <br id="br" />
+    <textarea
+      id="inputText"
+      placeholder="Enter text to encrypt/decrypt"
+    ></textarea>
+    <textarea id="outputText" readonly></textarea>
+
     <script>
       function pigpenCipher(text) {
         // Define the Pigpen cipher key with custom symbols
@@ -136,55 +199,58 @@
         const decryptedMessage = pigpenDecipher(encryptedMessage);
         outputElement.value = decryptedMessage;
       }
+      function copyOutput() {
+        const outputTextArea = document.getElementById("outputText");
+        outputTextArea.select();
+        document.execCommand("copy");
+        alert("Copied to clipboard");
+      }
 
-function copyOutput() {
-  const outputElement = document.getElementById("outputText");
-  outputElement.select();
-
-  try {
-    const successful = document.execCommand("copy");
-    const message = successful ? "Text copied!" : "Copy failed.";
-    console.log(message);
-  } catch (err) {
-    console.error("Copy failed:", err);
-  }
-
-  // Remove the selection from the output element
-  window.getSelection().removeAllRanges();
-}
-
-function pasteInput() {
-  const inputElement = document.getElementById("inputText");
-
-  inputElement.focus();
-  try {
-    if (document.execCommand("paste")) {
-      const pastedText = inputElement.value;
-      console.log("Pasted text:", pastedText);
-    } else {
-      console.log("Paste failed.");
-    }
-  } catch (err) {
-    console.error("Paste failed:", err);
-  }
-}
+      function pasteInput() {
+        const inputTextArea = document.getElementById("inputText");
+        inputTextArea.value = "";
+        inputTextArea.focus();
+        document.execCommand("paste");
+      }
 
       function exportMessage() {
-        const outputElement = document.getElementById("outputText");
-        const message = outputElement.value;
-        const blob = new Blob([message], { type: "text/plain" });
-        const anchor = document.createElement("a");
-        anchor.href = URL.createObjectURL(blob);
-        anchor.download = "output.txt";
-        anchor.click();
+        const outputTextArea = document.getElementById("outputText");
+        const message = outputTextArea.value;
+        const blob = new Blob([message], { type: "text/plain;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "encrypted_message.txt";
+        a.click();
+        URL.revokeObjectURL(url);
       }
 
       function clearText() {
-        const inputElement = document.getElementById("inputText");
-        const outputElement = document.getElementById("outputText");
-        inputElement.value = "";
-        outputElement.value = "";
+        const inputTextArea = document.getElementById("inputText");
+        const outputTextArea = document.getElementById("outputText");
+        inputTextArea.value = "";
+        outputTextArea.value = "";
       }
+      
+      const textToType = "Sparks Cipher Encryption"; // Text to be typed
+      const typingSpeed = 100; // Speed of typing in milliseconds
+    
+      function typeText(element, text, index) {
+        if (index < text.length) {
+          element.innerHTML = text.substring(0, index + 1);
+          index++;
+          setTimeout(() => {
+            typeText(element, text, index);
+          }, typingSpeed);
+        }
+      }
+    
+      // Start typing animation when the page loads
+      window.addEventListener("load", () => {
+        const typingElement = document.getElementById("typingEffect");
+        typeText(typingElement, textToType, 0);
+      });
+    </script>
     </script>
   </body>
 </html>
