@@ -5,194 +5,139 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sparks Hub</title>
     <style>
-      a {
-        overflow: hidden;
-        white-space: nowrap;
-        font-size: 16px;
-        color: rgb(255, 0, 0);
-        background-color: black;
-        
-        animation: typing 2s steps(40, end) forwards, blinking 0.75s infinite;
-        width: auto;
-        line-height: 1.4;
-        font-family: "Courier New", Courier, monospace;
-        animation: typing 2s steps(20, end) forwards, blinking 0.75s infinite;
-      }
-      .c2 {
-        white-space: nowrap;
-        font-size: 16px;
-        color: #0f0;
-        background-color: black;
-        padding: 20px;
-        width: auto;
-        line-height: 1.4;
-        font-family: "Courier New", Courier, monospace;
-      }
+
       body {
-        overflow: hidden;
         background-color: black;
+        color: #0f0;
+        font-family: Consolas;
+        padding: 20px;
+        margin: 0;
+        overflow: hidden;
         display: flex;
         flex-direction: column;
-        text-align: left;
-        align-items: center;
         height: 100vh;
-        margin: 50px;
-        font-family: "Courier New", Courier, monospace;
-      }
+        list-style-type: none;
+    }
+    #content{
+      align-items: center;
+      display: none;
+      height: auto;
+      padding:10px;
+      font-size: 16px;
+      background-color: darkslategrey;
 
-      .typed-out {
-        overflow: hidden;
-        white-space: nowrap;
-        font-size: 16px;
-        color: #0f0;
-        margin: 20px;
-        background-color: black;
+    }
+
+      .console{
         padding: 10px;
-        border-right: 2px solid transparent; /* Start with transparent border */
-        animation: typing 2s steps(40, end) forwards, blinking 0.75s infinite;
-        width: auto;
+        margin: 10px;
+        height: 10%;
+        font-size: 16px;
+        white-space: pre-line;
         line-height: 1.4;
-        font-family: "Courier New", Courier, monospace;
-        animation: typing 2s steps(20, end) forwards, blinking 0.75s infinite;
       }
-      @keyframes typing {
-        from {
-          width: 0;
-          border-color: transparent;
-        }
-        to {
-          width: 100%;
-          border-color: #0f0;
-        }
+      p{
+        color:white;
       }
-
-      @keyframes blinking {
-        from {
-          border-color: transparent;
-        }
-        to {
-          border-color: #0f0;
-        }
+      button{
+        margin-right:10px;
+        margin-left: 10px;
+        color:rgb(37, 39, 44);
+        cursor: pointer;
       }
       .hidden {
         display: none;
       }
+      ol {
+        list-style-type: none;
+      }
     </style>
-    <script>
-// Get the element you want to make fullscreen
-function enterFullscreen() {
-    var element = document.documentElement;
-
-    if (element.requestFullscreen) {
-      element.requestFullscreen();
-    } else if (element.mozRequestFullScreen) {
-      element.mozRequestFullScreen();
-    } else if (element.webkitRequestFullscreen) {
-      element.webkitRequestFullscreen();
-    } else if (element.msRequestFullscreen) {
-      element.msRequestFullscreen();
-    }
-  }
-
-  window.onload = function() {
-    enterFullscreen();
-  };
-
-// Trigger fullscreen mode
-if (element.requestFullscreen) {
-  element.requestFullscreen();
-} else if (element.mozRequestFullScreen) { // Firefox
-  element.mozRequestFullScreen();
-} else if (element.webkitRequestFullscreen) { // Chrome, Safari and Opera
-  element.webkitRequestFullscreen();
-} else if (element.msRequestFullscreen) { // IE/Edge
-  element.msRequestFullscreen();
-}
-
-      function replaceWithSecondMessage() {
-        var firstMessage = document.getElementById("first-message");
-        var secondMessage = document.getElementById("second-message");
-        var thirdMessage = document.getElementById("third-message");
-        var fourthMessage = document.getElementById("fourth-message");
-        var fithMessage = document.getElementById("fifth-message");
-
-        firstMessage.classList.remove("hidden"); // Show the first message
-        secondMessage.style.display = "none";
-        thirdMessage.style.display = "none";
-        fourthMessage.style.display = "none";
-        fithMessage.style.display = "none";
-      }
-      function showSecondMessage() {
-        var secondMessage = document.getElementById("second-message");
-        secondMessage.classList.remove("hidden");
-
-        // Retrieve the user's public IPv4 address
-        fetch("https://api64.ipify.org?format=json")
-          .then((response) => response.json())
-          .then((data) => {
-            var ipAddress = data.ip;
-            document.getElementById("ip-address").textContent = ipAddress;
-          })
-          .catch((error) => console.error("Error fetching IP address:", error));
-      }
-      function showThirdMessage() {
-        console.log("showThirdMessage() is being run!");
-        var thirdMessage = document.getElementById("third-message");
-        thirdMessage.classList.remove("hidden");
-      }
-      function showFourthMessage() {
-        console.log("showFourthMessage() is being run!");
-        var fourthMessage = document.getElementById("fourth-message");
-        fourthMessage.classList.remove("hidden");
-      }
-  
-      function showFifthMessage() {
-        console.log("showFifthMessage() is being run!");
-        var fifthMessage = document.getElementById("fifth-message");
-        fifthMessage.classList.remove("hidden");
-      }
-    </script>
   </head>
   <body>
-    <div class="c2">
-      <div
-        class="typed-out"
-        onanimationend="setTimeout(showSecondMessage, 1000)"
-      >
-        Sparks Hub
+    <div class="console" id="console">
+      <ol id="message-list"></ol>
+      <div id="content">
+        <p>cryptor<button href="Cryptor.html">Open Web Version</button><button href="SparksCryptsUI.py" download="SparksCryptsUI.py">Download UI based</button><button href="SparksCryptsConsole.py" download="SparksCryptsConsole.py">Download console based</button>
+        </p>
+        <p>wificracker<button href="wificrack.py" download="wificrack.py">Download</button>
+        </p>
+        <p>coming soon<button>Download</button>
+        </p>
+        <p>coming soon<button>Download</button>
+        </p>
+        <p>coming soon<button>Download</button>
+        </p>
+        <p>coming soon<button>Download</button>
+        </p>
       </div>
-      <div
-        id="second-message"
-        class="hidden typed-out"
-        onanimationend="setTimeout(showThirdMessage, 1000)"
-      >
-        Welcome User {<span id="ip-address"></span>}
-      </div>
-      <div
-        id="third-message"
-        class="hidden typed-out"
-        onanimationend="setTimeout(showFourthMessage, 1000)"
-      >
-        Be Carefull On What You share On The Enternet ;)
-      </div>
-      <br />
-      <br />
-      <br />
-      <br />
-      <div
-      id="fourth-message"
-      class="hidden typed-out"
-      onanimationend="setTimeout(showFifthMessage, 1000)"
-    >
-      <a href="SparksCrypt.html">Message Encryption Software</a>
+      
     </div>
-    <div
-      id="fifth-message"
-      class="hidden typed-out"
-      onanimationend="setTimeout(showFifthMessage, 1000)"
-    >
-      <a href="https://crypts.rocket.chat/home">Messenger</a>
-    </div>
-    </div>
+    
+    <script>
+      // Function to fetch the user's public IP address using ipify API
+      function getUserIP() {
+        return fetch("https://api.ipify.org?format=json")
+          .then((response) => response.json())
+          .then((data) => data.ip)
+          .catch((error) => {
+            console.error("Error fetching IP address:", error);
+            return "Unknown IP"; // Default value if IP address cannot be fetched
+          });
+      }
+
+      // Function to simulate typing effect
+      function typeMessage(messageText) {
+        return new Promise(async (resolve) => {
+          const messageList = document.getElementById("message-list");
+          const message = document.createElement("li");
+          messageList.appendChild(message);
+          let index = 0;
+
+          async function type() {
+            if (index < messageText.length) {
+              message.textContent += messageText.charAt(index);
+              index++;
+              setTimeout(type, 50); // Adjust the delay (in milliseconds) to control the typing speed
+            } else {
+              resolve();
+            }
+          }
+
+          await type();
+        });
+      }
+
+      // Function to type out messages one at a time
+// Function to type out messages one at a time
+async function typeMessagesOneByOne() {
+  const userIP = await getUserIP(); // Fetch the user's IP address
+  const messages = [
+    `server:spark> hello user ${userIP},`,
+    `server:spark> Welcome to SparksHub`,
+    `server:spark> here are a few tools and files to help you out`,
+    `server:spark> here is my email if you need help or have questions sparkscrypt@gmail.com
+    `
+    ];
+
+  const messageList = document.getElementById("message-list");
+  const contentDiv = document.getElementById("content");
+
+  for (let i = 0; i < messages.length; i++) {
+    await typeMessage(messages[i]);
+    await new Promise((resolve) => setTimeout(resolve, 1000)); // Adjust the delay between messages (in milliseconds)
+
+    // Check if this is the last message
+    if (i === messages.length - 1) {
+      // Display the content div
+      contentDiv.style.display = "block";
+    }
+  }
+}
+
+
+
+      // Call the function to start typing the messages when the page loads
+      window.onload = typeMessagesOneByOne;
+    </script>
   </body>
 </html>
