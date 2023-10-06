@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Password Screen</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #password-container {
+            text-align: center;
+            padding: 20px;
+            background-color: #f7f7f7;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #password-input {
+            padding: 10px;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        #submit-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="password-container">
+        <h1>Enter the Password</h1>
+        <input type="password" id="password-input" placeholder="Password">
+        <br><br>
+        <button id="submit-button">Submit</button>
+    </div>
+
+    <script>
+        // Define the correct password
+        const correctPassword = "http://example.com/";
+
+        // Function to check the entered password
+        function checkPassword() {
+            const enteredPassword = document.getElementById("password-input").value;
+
+            if (enteredPassword === correctPassword) {
+                // Redirect to another HTML file (change "redirect.html" to the desired file)
+                window.location.href = "home.html";
+            } else {
+                alert("Incorrect password. Please try again.");
+            }
+        }
+
+        // Attach the checkPassword function to the button click event
+        document.getElementById("submit-button").addEventListener("click", checkPassword);
+    </script>
+</body>
+</html>
