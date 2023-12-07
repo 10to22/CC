@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Document</title>
+	<script>
+
+		function saveSecretSantaPairs() {
+			if (participants.length < 2) {
+				alert("Add at least two participants to generate Secret Santa pairs.");
+				return;
+			}
+
+			const shuffledParticipants = shuffleArray(participants);
+			const secretSantaPairs = [];
+
+			for (let i = 0; i < participants.length; i++) {
+				let giver = participants[i];
+				let receiver = shuffledParticipants[i];
+
+				// If the giver and receiver are the same person, find another receiver
+				while (
+					giver === receiver ||
+					(i === participants.length - 1 && receiver === shuffledParticipants[0])
+				) {
+					shuffledParticipants.push(shuffledParticipants.shift()); // Move the first participant to the end
+					receiver = shuffledParticipants[i];
+				}
+
+				secretSantaPairs.push({
+					giver: giver,
+					receiver: receiver,
+				});
+			}
+
+			displaySecretSantaPairs(secretSantaPairs);
+			downloadSecretSantaPairs(secretSantaPairs);
+		}
+
+		function downloadSecretSantaPairs(secretSantaPairs) {
+			if (participants.length < 2) {
+				alert("Add at least two participants to generate Secret Santa pairs.");
+				return;
+			}
+
+			const shuffledParticipants = shuffleArray(participants);
+			const pairsWithDate = secretSantaPairs.map(pair => `${pair.giver} ➡ ${pair.receiver}`);
+			const textContent = pairsWithDate.join("\n");
+			const currentDate = new Date().toISOString().slice(0, 10); // Get the current date in the format YYYY-MM-DD
+			const filename = `secret_santa_list_${currentDate}.txt`;
+
+			const blob = new Blob([textContent], { type: "text/plain" });
+			const url = URL.createObjectURL(blob);
+
+			const a = document.createElement("a");
+			a.href = url;
+			a.download = filename;
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+			URL.revokeObjectURL(url);
+		}
+		function resetParticipants() {
+			participants = []; // Clear the participants array
+			showParticipantsList(); // Update the displayed list
+		}
+		function handleKeyDown(event) {
+			if (event.key === "Enter") {
+				addParticipant();
+			}
+		}
+	</script>
+
+</head>
+
+<body>
+	<div class="container">
+		<div class="nav">
+			<input type="text" id="nameInput" class="inputs" placeholder="Enter a Name"
+				onkeydown="handleKeyDown(event)" />
+			<button onclick="addParticipant()" class="button">Add Participant</button>
+			<button onclick="generateSecretSanta()" class="button2">Generate Secret Santa List</button>
+		</div>
+		<ol id="participantsList" class="container2">No Added Names</ol>
+	</div>
+	<div class="bottomnav">
+		<button onclick="saveSecretSantaPairs()" class="SaveButton">Save Secret Santa Pairs</button>
+		<button onclick="resetParticipants()" class="ResetButton">Reset Participants</button>
+		<input type="file" id="importParticipants" class="inputs" accept=".txt" />
+		<button onclick="importParticipants()" class="button">Import Participants</button>
+	</div>
+</body>
+<script>
+	let participants = [];
+
+	function addParticipant() {
+		const nameInput = document.getElementById("nameInput");
+		const participantName = nameInput.value.trim();
+
+		if (participantName !== "") {
+			participants.push(participantName);
+			nameInput.value = "";
+			showParticipantsList();
+		}
+	}
+	function showParticipantsList() {
+		const participantsList = document.getElementById("participantsList");
+		participantsList.innerHTML = ""; // Clear the existing list
+
+		if (participants.length === 0) {
+			const placeholderItem = document.createElement("li");
+			placeholderItem.classList.add("placeholder");
+			placeholderItem.textContent = "No Added Names";
+			participantsList.appendChild(placeholderItem);
+		} else {
+			participants.forEach((participant) => {
+				const listItem = document.createElement("li");
+				listItem.textContent = participant;
+				participantsList.appendChild(listItem);
+			});
+		}
+	}
+	function generateSecretSanta() {
+		if (participants.length < 2) {
+			alert("Add at least two participants to generate Secret Santa pairs.");
+			return;
+		}
+
+		const shuffledParticipants = shuffleArray(participants);
+		const secretSantaPairs = [];
+
+		for (let i = 0; i < participants.length; i++) {
+			let giver = participants[i];
+			let receiver = shuffledParticipants[i];
+
+			while (giver === receiver || areAlreadyPaired(giver, receiver, secretSantaPairs)) {
+				// If giver and receiver are the same or are already paired, find another receiver
+				shuffledParticipants.push(shuffledParticipants.shift());
+				receiver = shuffledParticipants[i];
+			}
+
+			secretSantaPairs.push({
+				giver: giver,
+				receiver: receiver,
+			});
+		}
+
+		displaySecretSantaPairs(secretSantaPairs);
+	}
+
+	function areAlreadyPaired(giver, receiver, pairs) {
+		// Check if the giver and receiver are already paired in the given pairs array
+		for (const pair of pairs) {
+			if ((pair.giver === giver && pair.receiver === receiver) || (pair.giver === receiver && pair.receiver === giver)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	function displaySecretSantaPairs(secretSantaPairs) {
+		const participantsList = document.getElementById("participantsList");
+		participantsList.innerHTML = ""; // Clear the existing list
+
+		secretSantaPairs.forEach((pair) => {
+			const listItem = document.createElement("li");
+			listItem.textContent = `${pair.giver} ➡ ${pair.receiver}`;
+			participantsList.appendChild(listItem);
+		});
+	}
+
+	function shuffleArray(array) {
+		const shuffledArray = array.slice(); // Create a copy of the original array
+		for (let i = shuffledArray.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+		}
+		return shuffledArray;
+	}
+	function importParticipants() {
+		const fileInput = document.getElementById("importParticipants");
+		const file = fileInput.files[0];
+
+		if (!file) {
+			alert("Please select a valid file.");
+			return;
+		}
+
+		const reader = new FileReader();
+
+		reader.onload = function (event) {
+			const content = event.target.result;
+			const lines = content.split("\n");
+
+			// Add imported participants to the existing list
+			lines.forEach((line) => {
+				const participantName = line.trim();
+				if (participantName !== "") {
+					participants.push(participantName);
+				}
+			});
+
+			showParticipantsList();
+		};
+
+		reader.onerror = function (event) {
+			alert("Error reading the file. Please try again.");
+		};
+
+		reader.readAsText(file);
+		fileInput.value = ""; // Reset the file input
+	}
+</script>
+
+</html>
