@@ -46,7 +46,7 @@
 			}
 
 			const shuffledParticipants = shuffleArray(participants);
-			const pairsWithDate = secretSantaPairs.map(pair => `${pair.giver} ➡ ${pair.receiver}`);
+			const pairsWithDate = secretSantaPairs.map(pair => `${pair.giver} " gives to " ${pair.receiver}`);
 			const textContent = pairsWithDate.join("\n");
 			const currentDate = new Date().toISOString().slice(0, 10); // Get the current date in the format YYYY-MM-DD
 			const filename = `secret_santa_list_${currentDate}.txt`;
@@ -166,7 +166,7 @@
 
 		secretSantaPairs.forEach((pair) => {
 			const listItem = document.createElement("li");
-			listItem.textContent = `${pair.giver} ➡ ${pair.receiver}`;
+			listItem.textContent = `${pair.giver} " gives to " ${pair.receiver}`;
 			participantsList.appendChild(listItem);
 		});
 	}
